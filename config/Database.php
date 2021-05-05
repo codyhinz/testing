@@ -1,10 +1,8 @@
 <?php
 
 class Database {
-    //DB params
     private $conn;
-
-    //DB connect
+    
     public function connect() {
         $this->conn = null;
         $url = getenv('JAWSDB_URL');

@@ -1,11 +1,9 @@
 <?php
 
 class Quote {
-    //DB stuff
     private $conn;
     private $table = 'quotes';
 
-    //Quote properties
     public $id;
     public $quote;
     public $category;
@@ -14,14 +12,11 @@ class Quote {
     public $categoryId;
     public $limit;
 
-    //Constructor with DB
     public function __construct($db) {
         $this->conn = $db;
     }
 
-    //Get all quotes
     public function read() {
-        //Create query
         $query = 'SELECT q.id,
                   q.quote,
                   a.author,
@@ -37,9 +32,7 @@ class Quote {
         return $statement;
     }
 
-    //Get single quote
     public function read_single() {
-        //Create query
         $query = 'SELECT q.id,
                   q.quote,
                   a.author,
@@ -58,26 +51,22 @@ class Quote {
         if(empty($row['quote'])) {
             return;
         }
-        //set properties
+
         $this->quote = $row['quote'];
         $this->author = $row['author'];
         $this->category = $row['category'];
     }
 
-    //Create quote
     public function create() {
-        //create query
         $query = 'INSERT INTO ' . $this->table . '
                  (quote, authorId, categoryId)
                   VALUES (:quote, :authorId, :categoryId)';
         $statement = $this->conn->prepare($query);
 
-        //clean data
         $this->quote = htmlspecialchars(strip_tags($this->quote));
         $this->authorId = htmlspecialchars(strip_tags($this->authorId));
         $this->categoryId = htmlspecialchars(strip_tags($this->categoryId));
 
-        //bind values and execute
         $statement->bindValue(':quote', $this->quote);
         $statement->bindValue(':authorId', $this->authorId);
         $statement->bindValue(':categoryId', $this->categoryId);
@@ -85,16 +74,13 @@ class Quote {
             return true;
         }
 
-        //print error if something goes wrong
         printf("Error: $s.\n", $statement->error);
 
         return false;
         
     }
     
-    //update quote
     public function update() {
-        //create query
         $query = 'UPDATE ' . $this->table . '
                  SET 
                     quote = :quote,
@@ -103,13 +89,11 @@ class Quote {
                  WHERE id = :id';
         $statement = $this->conn->prepare($query);
 
-        //clean data
         $this->quote = htmlspecialchars(strip_tags($this->quote));
         $this->authorId = htmlspecialchars(strip_tags($this->authorId));
         $this->categoryId = htmlspecialchars(strip_tags($this->categoryId));
         $this->id = htmlspecialchars(strip_tags($this->id));
 
-        //bind values and execute
         $statement->bindValue(':quote', $this->quote);
         $statement->bindValue(':authorId', $this->authorId);
         $statement->bindValue(':categoryId', $this->categoryId);
@@ -118,21 +102,17 @@ class Quote {
             return true;
         }
 
-        //print error if something goes wrong
         printf("Error: $s.\n", $statement->error);
 
         return false;
         
     }
 
-    //Delete quote
     public function delete() {
-        //create query
         $query = 'DELETE FROM ' . $this->table . '
                   WHERE id = :id';
         $statement = $this->conn->prepare($query);
 
-        //clean data 
         $this->id = htmlspecialchars(strip_tags($this->id));
 
         $statement->bindValue(':id', $this->id);
@@ -140,7 +120,6 @@ class Quote {
             return true;
         }
 
-        //print error if something goes wrong
         printf("Error: $s.\n", $statement->error);
 
         return false;
@@ -227,23 +206,17 @@ class Quote {
 
     public function get_quotes_for_view($authorId, $categoryId) {
         $num = 0;
-        //if authorId and/or categoryId are provided in url query
-        //get quotes by query
         $limit = null;
         if($authorId || $categoryId) {
             $result = $this->get_quotes_by_query($authorId, $categoryId, $limit);
             $num = $result->rowCount();
         } else {
-            //otherwise get all quotes
             $result = $this->read();
-            //Get row count
             $num = $result->rowCount();
         }
         
-         //quotes array
          $quotes_arr = array();
          
-        //Check if any quotes
         if($num > 0) {
 
             while($row = $result->fetch(PDO::FETCH_ASSOC)) {
@@ -256,7 +229,6 @@ class Quote {
                     'category' => $category
                 );
 
-                //Push item to quotes array
                 array_push($quotes_arr, $quote_item);
             }
         } 

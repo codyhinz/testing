@@ -1,20 +1,17 @@
 <?php
 
-    require('config/Database.php');
-    require('models/Quote.php');
-    require('models/Author.php');
-    require('models/Category.php');
+    require('config/database.php');
+    require('models/quote.php');
+    require('models/author.php');
+    require('models/category.php');
 
-    //Instantiate DB & Connect
     $database = new Database();
     $db = $database->connect();
 
-    //Instantiate objects
     $quote = new Quote($db);
     $author = new Author($db);
     $category = new Category($db);
 
-    //get url query parameters
     $authorId = filter_input(INPUT_GET, 'authorId', FILTER_VALIDATE_INT);
     $categoryId = filter_input(INPUT_GET, 'categoryId', FILTER_VALIDATE_INT);
 

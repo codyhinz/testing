@@ -5,8 +5,8 @@ header('Content-Type: application/json');
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods,Authorization,X-Requested-With');
 
-require '../../config/Database.php';
-require '../../models/Author.php';
+require '../../config/database.php';
+require '../../models/author.php';
 
 $database = new Database();
 $db = $database->connect();

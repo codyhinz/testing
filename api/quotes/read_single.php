@@ -4,8 +4,8 @@
  header('Access-Control-Allow-Origin: *');
  header('Content-Type: application/json');
 
- require '../../config/Database.php';
- require '../../models/Quote.php';
+ require '../../config/database.php';
+ require '../../models/quote.php';
 
  //Instantiate DB & Connect
  $database = new Database();

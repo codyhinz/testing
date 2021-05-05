@@ -5,8 +5,8 @@ header('Content-Type: application/json');
 header('Access-Control-Allow-Methods: DELETE');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Methods,Authorization,X-Requested-With');
 
-require '../../config/Database.php';
-require '../../models/Quote.php';
+require '../../config/database.php';
+require '../../models/quote.php';
 
 //Instantiate DB & Connect
 $database = new Database();

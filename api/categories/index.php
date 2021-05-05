@@ -4,8 +4,8 @@
     header('Access-Control-Allow-Origin: *');
     header('Content-Type: application/json');
 
-    require '../../config/Database.php';
-    require '../../models/Category.php';
+    require '../../config/database.php';
+    require '../../models/category.php';
 
     //Instantiate DB & Connect
     $database = new Database();

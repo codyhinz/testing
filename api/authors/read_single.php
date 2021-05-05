@@ -3,8 +3,8 @@
  header('Access-Control-Allow-Origin: *');
  header('Content-Type: application/json');
 
- require '../../config/Database.php';
- require '../../models/Author.php';
+ require '../../config/database.php';
+ require '../../models/author.php';
 
  $database = new Database();
  $db = $database->connect();
